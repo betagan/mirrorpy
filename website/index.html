@@ -1,0 +1,133 @@
+ <!DOCTYPE html>
+ <html>
+<head>
+    <title>mirrorpy dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/default.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<!-- fa fa-hourglass fa-clock-o fa-calendar-o -->
+<div id="faked_screen_region" style="width: 888px; height:565px;margin: 0 auto;border: 1px solid #aaa;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="row">
+                <div class="col-xs-12">
+                    <ul class="event-list">
+                        <li>
+                            <time datetime="2014-07-20">
+                                <span class="day">4</span>
+                                <span class="month">Jul</span>
+                                <span class="year">2014</span>
+                                <span class="time">ALL DAY</span>
+                            </time>
+                            <div class="info">
+                                <h2 class="title">Independence Day</h2>
+                                <p class="desc">United States Holiday</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <time datetime="2014-07-20 0000">
+                                <span class="day">8</span>
+                                <span class="month">Jul</span>
+                                <span class="year">2014</span>
+                                <span class="time">12:00 AM</span>
+                            </time>
+                            <div class="info">
+                                <h2 class="title">One Piece Unlimited World Red</h2>
+                                <p class="desc">PS Vita</p>
+                                <ul>
+                                    <li style="width:50%;"><i class="fa fa-clock-o"></i> 12:30</li>
+                                    <li style="width:50%;"><i class="fa fa-hourglass" ></i> 2 Std.</li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li>
+                            <time datetime="2014-07-20 2000">
+                                <span class="day">20</span>
+                                <span class="month">Jan</span>
+                                <span class="year">2014</span>
+                                <span class="time">8:00 PM</span>
+                            </time>
+
+                            <div class="info">
+                                <h2 class="title">Mouse0270's 24th Birthday!</h2>
+                                <p class="desc">Bar Hopping in Erie, Pa.</p>
+                                <ul>
+                                    <li style="width:50%;"><i class="fa fa-clock-o"></i> 12:30</li>
+                                    <li style="width:50%;"><i class="fa fa-calendar-o" ></i> 22.07.2014 15:00</li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="clock">
+                            <div id="Date"></div>
+                              <ul>
+                                  <li id="hours"></li>
+                                  <li id="point">:</li>
+                                  <li id="min"></li>
+                              </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" id="weather-home">
+                        <i class="fa fa-spinner fa-spin"></i>
+                    </div>
+                    <div class="col-xs-12" id="weather-work">
+                        <i class="fa fa-spinner fa-spin"></i>
+                    </div>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script language="JavaScript">
+$(function() {
+    $.get( "/weather-home", function( data ) {
+        $( "#weather-home" ).html( data );
+    });
+    $.get( "/weather-work", function( data ) {
+        $( "#weather-work" ).html( data );
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+// Create two variable with the names of the months and days in an array
+var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+var dayNames= ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+
+// Create a newDate() object
+var newDate = new Date();
+// Extract the current date from Date object
+newDate.setDate(newDate.getDate());
+// Output the day, date, month and year
+$('#Date').html(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
+
+setInterval( function() {
+	// Create a newDate() object and extract the minutes of the current time on the visitor's
+	var minutes = new Date().getMinutes();
+	// Add a leading zero to the minutes value
+	$("#min").html(( minutes < 10 ? "0" : "" ) + minutes);
+    },1000);
+
+setInterval( function() {
+	// Create a newDate() object and extract the hours of the current time on the visitor's
+	var hours = new Date().getHours();
+	// Add a leading zero to the hours value
+	$("#hours").html(( hours < 10 ? "0" : "" ) + hours);
+    }, 1000);
+});
+</script>
+</body>
+</html>
